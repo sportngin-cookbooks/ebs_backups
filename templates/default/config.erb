@@ -1,0 +1,5 @@
+<% @profiles.each do |profile_name, profile_info| %>
+  [<%=profile_name%>]
+  region=<%=profile_info[:region]%>
+  output=<%=profile_info[:output]%>
+<% end %>
