@@ -1,3 +1,5 @@
+require File.expand_path("../../libraries/helpers.rb", __FILE__)
+
 class ::Chef::Resource::Cron
   include ::EbsBackups::Helpers
 end
