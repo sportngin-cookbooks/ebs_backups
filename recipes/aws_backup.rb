@@ -10,7 +10,7 @@ home_dir = "/home/#{user}"
 
 cookbook_file "automated-backup.sh" do
   path "#{home_dir}/automated-backup.sh"
-  mode '0640'
+  mode '0740'
   owner user
   group group
   action :create
