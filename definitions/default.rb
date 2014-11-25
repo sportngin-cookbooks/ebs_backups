@@ -1,5 +1,5 @@
 class ::Chef::Resource::Cron
-  include ::Opscode::EbsBackups::Helpers
+  include ::EbsBackups::Helpers
 end
 
 define :cron_job, :cron => {}, :command => {} do
