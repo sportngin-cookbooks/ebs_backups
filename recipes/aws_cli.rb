@@ -12,13 +12,13 @@ end
 directory "#{home_dir}/.aws" do
   owner user
   group group
-  mode '0644'
+  mode '0744'
   action :create
 end
 
 template "#{home_dir}/.aws/credentials" do
   source "credentials.erb"
-  mode '0640'
+  mode '0740'
   owner user
   group group
   variables :profiles => node[:ebs_backups][:aws][:profiles]
@@ -26,7 +26,7 @@ end
 
 template "#{home_dir}/.aws/config" do
   source "config.erb"
-  mode '0640'
+  mode '0740'
   owner user
   group group
   variables :profiles => node[:ebs_backups][:aws][:profiles]

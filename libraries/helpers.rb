@@ -6,7 +6,7 @@ module EbsBackups
         command << "-s #{params[:selection_method]}"
       end
       if params[:tag]
-        command << "-t '#{params[:tag]}=true'"
+        command << "-t '#{params[:tag]},Values=true'"
       end
       if params[:volumeid]
         command << "-v '#{params[:volumeid]}'"
