@@ -56,5 +56,6 @@ platforms:
 suites:
   - name: default
     run_list:
+      - recipe[ebs_backups::user]
       - recipe[ebs_backups::default]
     attributes:
