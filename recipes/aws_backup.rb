@@ -1,8 +1,4 @@
-require File.expand_path("../../libraries/helpers.rb", __FILE__)
-
-class ::Chef::Resource::Cron
-  include ::EbsBackups::Helpers
-end
+require File.expand_path("../../libraries/backup_command.rb", __FILE__)
 
 user = node[:ebs_backups][:user]
 group = node[:ebs_backups][:group]
@@ -17,6 +13,8 @@ cookbook_file "automated-backup.sh" do
 end
 
 node[:ebs_backups][:crons].each do |name, params|
+  backup_user = params[:cron][:user] || node[:ebs_backups][:user]
+
   cron name do
     action params[:cron][:action]
     minute params[:cron][:minute]
@@ -25,10 +23,10 @@ node[:ebs_backups][:crons].each do |name, params|
     weekday params[:cron][:weekday]
     month params[:cron][:month]
     mailto params[:cron][:mailto]
-    user params[:cron][:user] || node[:ebs_backups][:user]
+    user backup_user
     path params[:cron][:path]
     shell params[:cron][:shell]
     provider params[:cron][:provider]
-    command backup_command(params[:command])
+    command EbsBackups::BackupCommand.command(backup_user, params[:command])
   end
 end
