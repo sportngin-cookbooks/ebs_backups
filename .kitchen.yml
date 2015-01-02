@@ -73,6 +73,7 @@ provisioner:
             before: 'land before time'
             after: 'happily ever after'
             failure: 'epic fail'
+            log: true
             tag: 'All'
             purge_after_days: '30'
 

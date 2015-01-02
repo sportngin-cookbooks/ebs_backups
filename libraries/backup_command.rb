@@ -26,7 +26,7 @@ module EbsBackups
     end
 
     def log
-      "&> /home/#{@user}/automated-backup_`date +\"%Y%m%d\"`.log" if @params[:log]
+      "&> /home/#{@user}/automated-backup-`date +\"%Y%m%d\"`.log" if @params[:log]
     end
 
     def backup_options
