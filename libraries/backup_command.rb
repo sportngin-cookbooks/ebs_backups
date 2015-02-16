@@ -35,13 +35,13 @@ module EbsBackups
 
     def backup_options
       options = ""
-      options << " -s #{@params[:selection_method]}" if @params[:selection_method]
-      options << " -t '#{@params[:tag]},Values=true'" if @params[:tag]
-      options << " -v '#{@params[:volumeid]}'" if @params[:volumeid]
-      options << " -r #{@params[:region]}" if @params[:region]
-      options << " -c #{@params[:cron_primer_file]}" if @params[:cron_primer_file]
-      options << " -k #{@params[:purge_after_days]}" if @params[:purge_after_days]
-      options << " -p" if @params[:purge]
+      options << %Q{ -s #{@params[:selection_method]}} if @params[:selection_method]
+      options << %Q{ -t "#{@params[:tag]},Values=true"} if @params[:tag]
+      options << %Q{ -v #{@params[:volumeid]}} if @params[:volumeid]
+      options << %Q{ -r #{@params[:region]}} if @params[:region]
+      options << %Q{ -c #{@params[:cron_primer_file]}} if @params[:cron_primer_file]
+      options << %Q{ -k #{@params[:purge_after_days]}} if @params[:purge_after_days]
+      options << %Q{ -p}if @params[:purge]
       options
     end
   end
