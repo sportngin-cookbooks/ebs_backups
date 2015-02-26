@@ -27,6 +27,6 @@ node[:ebs_backups][:crons].each do |name, params|
     path params[:cron][:path]
     shell params[:cron][:shell]
     provider params[:cron][:provider]
-    command EbsBackups::BackupCommand.command(backup_user, params[:command])
+    command EbsBackups::BackupCommand.command(node, backup_user, params[:command])
   end
 end

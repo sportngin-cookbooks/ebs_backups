@@ -1,7 +1,7 @@
 module EbsBackups
   class BackupCommand
-    def self.command(user, params)
-      new(user, params).command
+    def self.command(node, user, params)
+      new(node, user, params).command
     end
 
     def initialize(node, user, params)

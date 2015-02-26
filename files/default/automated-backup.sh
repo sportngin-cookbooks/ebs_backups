@@ -81,15 +81,12 @@ add_EBS_permissions() {
   #if $permitted_account_ids is not zero length then set the tag on the snapshot using aws ec2 create-tags
   if [[ -n $permitted_account_ids ]]; then
     echo "Adding permission on snapshot $ec2_snapshot_resource_id to the following account ids: $permitted_account_ids"
-    first_id=true
+    sep=""
     volume_permissions='{"Add":['
     for id in $permitted_account_ids; do
-      if $first_id; then
-        first_id=false
-        volume_permissions="$volume_permissions{"
-      else
-        volume_permissions="$volume_permissions,{"
-      fi
+      id_obj="{\"UserId\":\"$id\",\"Group\":\"all\"}"
+      volume_permissions="$volume_permissions$sep$id_obj"
+      sep=","
     done
     volume_permissions="$volume_permissions]}"
     permissions_argument="--create-volume-permission $volume_permissions"
