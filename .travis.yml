@@ -6,7 +6,7 @@ env:
   - secure: nEQclN2LpUgqiNKnzn8DAjlrxVwaFfeN2eOYodiGmNES7sX4Cvq9VA5tswQPhkkLvsPRuEc6Y4ifs+6L1TOjRzmC1iUf/x6c6EU/FZTaRq+Lo7DO0ydG3k2bU9BHhl7dfRdjHkeM02SMfeOhTZuHzOePUaN7+MU0rfg70EWYjwA=
 before_install:
 - openssl aes-256-cbc -K $encrypted_8aeee3947bf2_key -iv $encrypted_8aeee3947bf2_iv
-  -in id_rsa_kitchen_ec2.enc -out ~\/.ssh/id_rsa_kitchen_ec2 -d
+  -in id_rsa_kitchen_ec2.enc -out ec2.pem -d
 - chmod 600 ec2.pem
 script: bundle exec rake
 language: ruby
