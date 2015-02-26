@@ -31,7 +31,7 @@ module EbsBackups
     end
 
     def logfile
-      @params[:logfile] || "#{node[:ebs_backups][:log_dir]}/ebs_backups.log"
+      @params[:logfile] || "#{@node[:ebs_backups][:log_dir]}/ebs_backups.log"
     end
 
     def backup_options
