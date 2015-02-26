@@ -229,6 +229,7 @@ for ebs_selected in $ebs_backup_list; do
     echo -e "An error occurred when running ec2-create-snapshot. The error returned is below:\n$ec2_create_snapshot_result" 1>&2 ; exit 70
   fi  
   create_EBS_Snapshot_Tags
+  add_EBS_permissions
 done
 
 #if purge_snapshots is true, then run purge_EBS_Snapshots function
