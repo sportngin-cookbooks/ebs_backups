@@ -4,7 +4,8 @@ module EbsBackups
       new(user, params).command
     end
 
-    def initialize(user, params)
+    def initialize(node, user, params)
+      @node = node
       @params = params
       @user = user
     end
@@ -30,7 +31,7 @@ module EbsBackups
     end
 
     def logfile
-      @params[:logfile] || "/var/log/ebs_backups.log"
+      @params[:logfile] || "#{node[:ebs_backups][:log_dir]}/ebs_backups.log"
     end
 
     def backup_options
