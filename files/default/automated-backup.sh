@@ -77,6 +77,26 @@ create_EBS_Snapshot_Tags() {
   fi
 }
 
+add_EBS_permissions() {
+  #if $permitted_account_ids is not zero length then set the tag on the snapshot using aws ec2 create-tags
+  if [[ -n $permitted_account_ids ]]; then
+    echo "Adding permission on snapshot $ec2_snapshot_resource_id to the following account ids: $permitted_account_ids"
+    first_id=true
+    volume_permissions='{"Add":['
+    for id in $permitted_account_ids; do
+      if $first_id; then
+        first_id=false
+        volume_permissions="$volume_permissions{"
+      else
+        volume_permissions="$volume_permissions,{"
+      fi
+    done
+    volume_permissions="$volume_permissions]}"
+    permissions_argument="--create-volume-permission $volume_permissions"
+    aws_ec2_create_tag_result=$(aws ec2 modify-snapshot-attribute --snapshot-id $ec2_snapshot_resource_id --region $region $permissions_argument --output text 2>&1)
+  fi
+}
+
 get_date_binary() {
   #$(uname -o) (operating system) would be ideal, but OS X / Darwin does not support to -o option
   #$(uname) on OS X defaults to $(uname -s) and $(uname) on GNU/Linux defaults to $(uname -s)
@@ -145,9 +165,11 @@ hostname_tag_create=false
 user_tags=false
 #sets the Purge Snapshot feature to false - if purge_snapshots=true then snapshots will be purged
 purge_snapshots=false
+# Space separated list of AWS account IDs to share snapshots with.
+permitted_account_ids=""
 #handles options processing
 
-while getopts :s:c:r:v:t:k:pnhu opt; do
+while getopts :s:c:r:v:t:k:a:pnhu opt; do
   case $opt in
     s) selection_method="$OPTARG" ;;
     c) cron_primer="$OPTARG" ;;
@@ -159,6 +181,7 @@ while getopts :s:c:r:v:t:k:pnhu opt; do
     h) hostname_tag_create=true ;;
     p) purge_snapshots=true ;;
     u) user_tags=true ;;
+    a) permitted_account_ids="$OPTARG" ;;
     *) echo "Error with Options Input. Cause of failure is most likely that an unsupported parameter was passed or a parameter was passed without a corresponding option." 1>&2 ; exit 64 ;;
   esac
 done

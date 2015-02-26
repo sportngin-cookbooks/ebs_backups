@@ -1,7 +1,7 @@
 require 'spec_helper'
 
-describe user('deploy') do
+describe user('ec2-user') do
   it { should exist }
-  it { should belong_to_group 'deploy' }
-  it { should have_home_directory '/home/deploy' }
+  it { should belong_to_group 'ec2-user' }
+  it { should have_home_directory '/home/ec2-user' }
 end

@@ -42,6 +42,7 @@ module EbsBackups
       options << %Q{ -c #{@params[:cron_primer_file]}} if @params[:cron_primer_file]
       options << %Q{ -k #{@params[:purge_after_days]}} if @params[:purge_after_days]
       options << %Q{ -p}if @params[:purge]
+      options << %Q{ -a "#{@params[:permitted_account_ids]}"} if @params[:permitted_account_ids]
       options
     end
   end
