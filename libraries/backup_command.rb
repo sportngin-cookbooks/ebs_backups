@@ -1,10 +1,11 @@
 module EbsBackups
   class BackupCommand
-    def self.command(user, params)
-      new(user, params).command
+    def self.command(node, user, params)
+      new(node, user, params).command
     end
 
-    def initialize(user, params)
+    def initialize(node, user, params)
+      @node = node
       @params = params
       @user = user
     end
@@ -30,7 +31,7 @@ module EbsBackups
     end
 
     def logfile
-      @params[:logfile] || "/var/log/ebs_backups.log"
+      @params[:logfile] || "#{@node[:ebs_backups][:log_dir]}/ebs_backups.log"
     end
 
     def backup_options
@@ -42,6 +43,7 @@ module EbsBackups
       options << %Q{ -c #{@params[:cron_primer_file]}} if @params[:cron_primer_file]
       options << %Q{ -k #{@params[:purge_after_days]}} if @params[:purge_after_days]
       options << %Q{ -p}if @params[:purge]
+      options << %Q{ -a "#{@params[:permitted_account_ids]}"} if @params[:permitted_account_ids]
       options
     end
   end

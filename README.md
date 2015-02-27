@@ -11,6 +11,8 @@ All attributes are namespaced under the `:ebs_backups` tag.
 
 `node[:ebs_backups][:group]` defines group that the above user belongs to *(defaults to 'deploy')*
 
+`node[:ebs_backups][:log_dir]` defines directory for logs *(defaults to '/var/log/ebs_backups')*
+
 #####[:aws][:profiles]
 Defines neccessary configs to run the AWSCLIas outlined [here](http://docs.aws.amazon.com/cli/latest/userguide/cli-chap-getting-started.html)
 

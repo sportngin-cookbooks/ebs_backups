@@ -17,3 +17,9 @@ directory home_dir do
   group group
   mode 0700
 end
+
+directory node[:ebs_backups][:log_dir] do
+  owner user
+  group group
+  mode '0755'
+end
