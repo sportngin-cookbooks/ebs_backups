@@ -84,7 +84,7 @@ add_EBS_permissions() {
     sep=""
     volume_permissions='{"Add":['
     for id in $permitted_account_ids; do
-      id_obj="{\"UserId\":\"$id\",\"Group\":\"all\"}"
+      id_obj="{\"UserId\":\"$id\"}"
       volume_permissions="$volume_permissions$sep$id_obj"
       sep=","
     done
