@@ -2,7 +2,9 @@ user = node[:ebs_backups][:user]
 group = node[:ebs_backups][:group]
 home_dir = "/home/#{user}"
 
-group group
+group group do
+  append true
+end
 user user do
   home home_dir
   gid group
