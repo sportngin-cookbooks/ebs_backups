@@ -37,6 +37,7 @@ provisioner:
             weekday: '6'
           command:
             tag: 'Backups'
+            tag_value: 'weekly'
             purge_after_days: '30'
         before:
           cron:

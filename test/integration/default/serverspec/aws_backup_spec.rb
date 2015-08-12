@@ -5,7 +5,7 @@ describe file('/home/ec2-user/automated-backup.sh') do
 end
 
 describe cron do
-  it { should have_entry(%Q{1 * * * 6 /home/ec2-user/automated-backup.sh -t "Backups,Values=true" -k 30}).with_user('ec2-user') }
+  it { should have_entry(%Q{1 * * * 6 /home/ec2-user/automated-backup.sh -t "Backups,Values=weekly" -k 30}).with_user('ec2-user') }
   it { should have_entry(%Q{2 * * * 6 land before time && /home/ec2-user/automated-backup.sh -t "Before,Values=true" -k 30}).with_user('ec2-user') }
   it { should have_entry(%Q{3 * * * 6 /home/ec2-user/automated-backup.sh -t "After,Values=true" -k 30 && happily ever after}).with_user('ec2-user') }
   it { should have_entry(%Q{4 * * * 6 /home/ec2-user/automated-backup.sh -t "Failure,Values=true" -k 30 || epic fail}).with_user('ec2-user') }
