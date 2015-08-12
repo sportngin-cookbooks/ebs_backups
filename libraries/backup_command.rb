@@ -37,7 +37,7 @@ module EbsBackups
     def backup_options
       options = ""
       options << %Q{ -s #{@params[:selection_method]}} if @params[:selection_method]
-      options << %Q{ -t "#{@params[:tag]},Values=true"} if @params[:tag]
+      options << %Q{ -t "#{@params[:tag]},Values=#{@params[:tag_value] ? @params[:tag_value] : 'true' }"} if @params[:tag]
       options << %Q{ -v #{@params[:volumeid]}} if @params[:volumeid]
       options << %Q{ -r #{@params[:region]}} if @params[:region]
       options << %Q{ -c #{@params[:cron_primer_file]}} if @params[:cron_primer_file]
