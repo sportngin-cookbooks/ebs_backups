@@ -1,7 +1,7 @@
 require 'spec_helper'
 
-describe package('aws') do
-  it { should be_installed.by('pip') }
+describe command('/usr/local/bin/pip list') do
+  its(:stdout) { should match /awscli/ }
 end
 
 describe file('/home/ec2-user/.aws') do
