@@ -39,6 +39,9 @@ get_EBS_List() {
       fi
       ebs_selection_string="--filters Name=tag:$tag"
       ;;
+    all)
+      ebs_selection_string=""
+      ;;
     *) echo "If you specify a selection_method (-s selection_method) for selecting EBS volumes you must select either \"volumeid\" (-s volumeid) or \"tag\" (-s tag)." 1>&2 ; exit 64 ;;
   esac
   #creates a list of all ebs volumes that match the selection string from above
