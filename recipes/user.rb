@@ -19,3 +19,16 @@ directory node[:ebs_backups][:log_dir] do
   group group
   mode '0755'
 end
+
+when node[:ebs_backups][:sudo]
+  template "/etc/sudoers.d/#{user}" do
+    source "sudoers-user.erb"
+    mode '0440'
+    owner "root"
+    group "root"
+    # Chef <= 12.4
+    verify 'visudo -cf %{file}'
+    # Chef >= 12.5
+    # verify 'visudo -cf %{path}'
+  end
+end
