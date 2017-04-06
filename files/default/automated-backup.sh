@@ -72,6 +72,14 @@ create_EBS_Snapshot_Tags() {
   if $user_tags; then
     snapshot_tags="$snapshot_tags Key=Volume,Value=${ebs_selected} Key=Created,Value=$current_date"
   fi
+  #if $extra_tags is set, then append the Key/Value pairs to the variable $snapshot_tags
+  if $extra_tags; then
+    if echo $extra_tags | grep -E '^(Key=.+,Value=[^ ]*)+$'; then
+      snapshot_tags="$snapshot_tags $extra_tags"
+    else
+      echo "Invalid tag format, see 'aws ec2 create-tags help' for more information.  Extra tags ignored."
+    fi
+  fi
   #if $snapshot_tags is not zero length then set the tag on the snapshot using aws ec2 create-tags
   if [[ -n $snapshot_tags ]]; then
     echo "Tagging Snapshot $ec2_snapshot_resource_id with the following Tags: $snapshot_tags"
@@ -169,7 +177,7 @@ purge_snapshots=false
 permitted_account_ids=""
 #handles options processing
 
-while getopts :s:c:r:v:t:k:a:pnhu opt; do
+while getopts :s:c:r:v:t:k:a:x:pnhu opt; do
   case $opt in
     s) selection_method="$OPTARG" ;;
     c) cron_primer="$OPTARG" ;;
@@ -182,6 +190,7 @@ while getopts :s:c:r:v:t:k:a:pnhu opt; do
     p) purge_snapshots=true ;;
     u) user_tags=true ;;
     a) permitted_account_ids="$OPTARG" ;;
+    x) extra_tags="$OPTARG" ;;
     *) echo "Error with Options Input. Cause of failure is most likely that an unsupported parameter was passed or a parameter was passed without a corresponding option." 1>&2 ; exit 64 ;;
   esac
 done

@@ -44,6 +44,7 @@ module EbsBackups
       options << %Q{ -k #{@params[:purge_after_days]}} if @params[:purge_after_days]
       options << %Q{ -p}if @params[:purge]
       options << %Q{ -a "#{@params[:permitted_account_ids]}"} if @params[:permitted_account_ids]
+      options << %Q{ -x "#{@params[:extra_tags]}"} if @params[:extra_tags]
       options
     end
   end
