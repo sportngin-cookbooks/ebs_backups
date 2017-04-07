@@ -49,7 +49,7 @@ get_EBS_List() {
   #takes the output of the previous command
   ebs_backup_list_result=$(echo $?)
   if [[ $ebs_backup_list_result -gt 0 ]]; then
-    echo -e "An error occurred when running ec2-describe-volumes. The error returned is below:\n$ebs_backup_list_complete" 1>&2 ; exit 70
+    echo -e "An error occurred when running ec2-describe-volumes. The error returned is below:\n$ebs_backup_list" 1>&2 ; exit 70
   fi
 }
 
@@ -74,7 +74,7 @@ create_EBS_Snapshot_Tags() {
   fi
   #if $extra_tags is set, then append the Key/Value pairs to the variable $snapshot_tags
   if [[ -n $extra_tags ]]; then
-    if echo $extra_tags | grep -E '^(Key=.+,Value=[^ ]*)+$'; then
+    if echo $extra_tags | grep -q -E '^(Key=.+,Value=[^ ]*)+$'; then
       snapshot_tags="$snapshot_tags $extra_tags"
     else
       echo "Invalid tag format, see 'aws ec2 create-tags help' for more information.  Extra tags ignored."
@@ -238,7 +238,7 @@ for ebs_selected in $ebs_backup_list; do
   ec2_snapshot_description="ec2ab_${ebs_selected}_$current_date"
   ec2_snapshot_resource_id=$(aws ec2 create-snapshot --region $region --description $ec2_snapshot_description --volume-id $ebs_selected --output text --query SnapshotId 2>&1)
   if [[ $? != 0 ]]; then
-    echo -e "An error occurred when running ec2-create-snapshot. The error returned is below:\n$ec2_create_snapshot_result" 1>&2 ; exit 70
+    echo -e "An error occurred when running ec2-create-snapshot. The error returned is below:\n$ec2_snapshot_resource_id" 1>&2 ; exit 70
   fi
   create_EBS_Snapshot_Tags
   add_EBS_permissions
