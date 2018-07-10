@@ -11,7 +11,7 @@ module EbsBackups
     end
 
     def command
-      [before_command, "/home/#{@user}/automated-backup.sh#{backup_options}", after_command, failure_command, log].compact.join(" ")
+      ['(', before_command, "/home/#{@user}/automated-backup.sh#{backup_options}", after_command, failure_command, ')', log].compact.join(" ")
     end
 
     def before_command
